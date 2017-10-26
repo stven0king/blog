@@ -1,0 +1,17 @@
+
+<!-- Gitment评论插件通用代码 -->
+<div id="git"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+  owner: "stven0king",
+  repo: "stven0king.github.io",
+  oauth: {
+    client_id: "<%=theme.gitment.ClientID%>",
+    client_secret:"<%=theme.gitment.ClientSecret%>",
+  },
+})
+gitment.render('git')
+</script>
+<!-- Gitment代码结束 -->

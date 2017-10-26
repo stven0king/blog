@@ -85,10 +85,10 @@
 <% } %>
 
 <% if (!index){ %>
-  <% if (theme.gentie_productKey && post.comments){ %>
-  <%- partial('post/netease') %>
+  <% if (theme.gitment.enable && post.comments){ %>
+  <%- partial('post/git') %>
   <% } else { %>
-    <div class="netease"></div>
+    <div class="git"></div>
   <% } %>
 <% } %>
 

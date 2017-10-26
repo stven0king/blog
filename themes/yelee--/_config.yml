@@ -88,6 +88,16 @@ show_count: true
 ## 是否在主页文章标题旁显示评论数（多说、Disqus）
 ## Add comment count after article title
 
+# Gitment
+# Introduction: https://imsun.net/posts/gitment-introduction/
+gitment:
+  enable: true
+  owner: stven0king
+  repo: stven0king.github.io
+  ClientID: 00c12e7601ea8004b339
+  ClientSecret: 2206c556bf3e1f5967962220c3439f458ed41c7f
+  lazy: true
+
 disqus: 
   #on: true
   shortname: 
@@ -108,7 +118,7 @@ youyan:
   # 是否开启友言评论，http://www.uyan.cc/index.php
   # id 中填写你的友言用户数字ID，注册后进入后台管理即可查看
   # 友言服务在 Web 环境下运行，普通本地环境无法查看，请部署后在线上测试。
-
+#网易云更贴秘钥
 gentie_productKey: 7bafb3b3bd9545e185a556b5fe9e5668  
 
 

@@ -46,3 +46,5 @@ tag_cloud:
   categories: 个分类，
   total: 共计
   tags: 个标签
+
+gitmentbutton: 显示 Gitment 评论
