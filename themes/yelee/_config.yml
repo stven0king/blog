@@ -99,7 +99,7 @@ gitment:
   lazy: true
 
 disqus: 
-  #on: true
+  on: true
   shortname: 
   # https://help.disqus.com/customer/en/portal/articles/466208-what-s-a-shortname-
   # It is unnecessary to enable disqus here if 
@@ -118,8 +118,8 @@ youyan:
   # 是否开启友言评论，http://www.uyan.cc/index.php
   # id 中填写你的友言用户数字ID，注册后进入后台管理即可查看
   # 友言服务在 Web 环境下运行，普通本地环境无法查看，请部署后在线上测试。
-#网易云更贴秘钥
-gentie_productKey: 7bafb3b3bd9545e185a556b5fe9e5668  
+#网易云更贴
+#gentie_productKey: 7bafb3b3bd9545e185a556b5fe9e5668  
 
 
 # >>> Style Customisation 样式自定义 <<<
@@ -139,7 +139,7 @@ color_scheme: yilia
 
 highlight_style:
   on: true
-  inline_code: 1  # Value: 0 - 9 可选
+  inline_code: 3  # Value: 0 - 9 可选
   code_block: 1  # Value: 0 - 4 
   # Set inline_code to style highlight text
   # Chose a highlight theme for code block
@@ -148,7 +148,7 @@ highlight_style:
 
 blockquote_style:
   on: true
-  blockquote: 1  # Value: 0 - 7 可选
+  blockquote: 3  # Value: 0 - 7 可选
   # 自定义文章「引用部分」的样式
 
 # Headings Style | 标题风格
@@ -156,7 +156,7 @@ blockquote_style:
 heading_style: 0 # Value: 0 - 2
 
 ## List style type (ul) | 无序列表项标记样式
-list_style: 0  # value: 0 - 12 可选
+list_style: 8  # value: 0 - 12 可选
 
 # 左边栏宽度 px
 left_col_width: 300
@@ -166,6 +166,8 @@ copyright: true
 
 # Table of contents | 文章目录
 toc: true
+  #list_number: true  #是否显示目录标题前的序号
+  #nowrap: false #标题不换行
 
 # 目录中标题不换行
 # Keep TOC title on the same line | 

@@ -6,36 +6,46 @@ categories: Android
 description: "Retrofit+Rxjava+okhttp是时下比较受欢迎的网络请求框架，其源代码并不是很多，其底层网络通信时交由 OkHttp来完成的，但是Retrofit运用了大量的设计模式，代码逻辑很清晰。本文通过Retrofit2.0的使用讲述其实现原理"
 ---
 
-#Android网络之Retrofit2.0使用和解析
+# Android网络之Retrofit2.0使用和解析 #
 
-##Retrofit2在项目中的使用
-###Android studio项目添加依赖
+## Retrofit2在项目中的使用 ##
+### Android studio项目添加依赖 ###
+
 ``` java
 compile 'com.squareup.retrofit2:retrofit:2.0.1'
 ```
-###项目中使用样例
-####定义HTTP API使用接口
+
+### 项目中使用样例 ###
+#### 定义HTTP API使用接口 ####
+
 ```java
 public interface GitHubService {
 	@GET("users/{user}/repos")
 	 Call<List<Repo>> listRepos(@Path("user") String user);
 }
 ```
+
 >- 通过在接口上添加注解的方式来表示如何处理网络请求。
 - Retrofit支持5中类型的注解：GET,POST,PUT,DELETE和HEAD.
-- 可以使用不带参数的url```java @GET("users/list")```，也可以使用带参数的url```java  @GET("users/list?sort=desc")```
-####构造Retrofit实例
+- 可以使用不带参数的url`@GET("users/list")`，也可以使用带参数的url`@GET("users/list?sort=desc")`
+
+#### 构造Retrofit实例 ####
+
 ```java
 Retrofit retrofit = new Retrofit.Builder()
     .baseUrl("https://api.github.com/")
     .build();
 GitHubService service = retrofit.create(GitHubService.class);
 ```
-####创建同步或异步HTTP请求到远程网络服务器
+
+#### 创建同步或异步HTTP请求到远程网络服务器 ####
+
 ```java
 Call<List<Repo>> repos = service.listRepos("octocat");
 ```
-####定制数据类型转换器
+
+#### 定制数据类型转换器 ####
+
 >- Gson: com.squareup.retrofit2:converter-gson
 - Jackson: com.squareup.retrofit2:converter-jackson
 - Moshi: com.squareup.retrofit2:converter-moshi
@@ -52,8 +62,10 @@ Retrofit retrofit = new Retrofit.Builder()
 
 GitHubService service = retrofit.create(GitHubService.class);
 ```
-###Retrofit使用扩展
-####自定义Gson类型转换器
+
+### Retrofit使用扩展 ###
+#### 自定义Gson类型转换器 ####
+
 ```java
 /**
 {
@@ -85,7 +97,9 @@ public class Wrapper {
 
 }
 ```
+
 添加到Retrofit当中
+
 ```java
 Gson gson = new GsonBuilder()
             .registerTypeAdapter(Wrapper.class, new Wrapper.JsonAdapter())
@@ -97,8 +111,10 @@ Retrofit retrofit = new Retrofit.Builder()
 
 GitHubService service = retrofit.create(GitHubService.class);      
 ```
-####请求时添加head信息
+
+#### 请求时添加head信息 ####
 在定义请求接口时添加：
+
 ```java
 @Headers("Cache-Control: max-age=640000")
 @GET("widget/list")
@@ -118,20 +134,23 @@ Call<User> getUser(@Header("Authorization") String authorization)
 ![Retrofit依赖](http://img.blog.csdn.net/20160708104109016)
 如果所示在Retrofit2.0中只支持okhttp，所以另一种方法是在okhttp的拦截器中addheader。
 
-##Retrofit2源码解析
+## Retrofit2源码解析 ##
 > Retrofit请求框架实现了高度的解耦，通过解析注解的得到的代理类生成http请求，然后将请求交给OkHttp。通过在Retrofit创建时生成的Converter再将OkHttp返回的数据进行类型转换得到自己需要的数据。现在Rxjava响应式编程已经广泛应用，在使用Retrofit时也会结合RxJava使编码更加简单、高效。
 
 一张图简单描述一下Retrofit的工作原理：
 ![Retrofit工作原理](http://img.blog.csdn.net/20160708153944054)
 
-###定义网络请求接口
+### 定义网络请求接口 ###
+
 ```java
 public interface GitHubService {
 	 @GET("users/{user}/repos")
 	 Call<List<Repo>> listRepos(@Path("user") String user);
 }
 ```
-###创建Retrofit实例
+
+### 创建Retrofit实例 ###
+
 ```java
 Retrofit retrofit = new Retrofit.Builder()
     .baseUrl("https://api.github.com")
@@ -144,16 +163,20 @@ Retrofit retrofit = new Retrofit.Builder()
     .addConverterFactory(GsonConverterFactory.create())
     .build();
 ```
+
 >- 设置BaseUrl
 - 添加CallAdapterFactory
 - 添加converterFactory
 - 此时也可以设置自定义的okHttpclient
 
 接下来我们看
+
 ```java
 GitHubService service = retrofit.create(GitHubService.class);
 ```
-###Retrofit.create方法的详细介绍
+
+### Retrofit.create方法的详细介绍 ###
+
 ```java
 public <T> T create(final Class<T> service) {
 	//判断定义的接口服务是否可用
@@ -193,7 +216,8 @@ public <T> T create(final Class<T> service) {
   }
 ```
 
-###Platfrom的获取
+### Platfrom的获取 ###
+
 ![Platfrom](http://img.blog.csdn.net/20160902155113639)
 
 ```java
@@ -230,10 +254,11 @@ class Platform {
 ```
 
 
-###ServiceMethod对象的生成
+### ServiceMethod对象的生成 ###
 先看一张我debug时候的ServiceMethod的图
 ![ServiceMethod](http://img.blog.csdn.net/20160902161408563)
-####ServiceMethod的获取
+#### ServiceMethod的获取 ####
+
 ```java
 /**Retrofit.java
 * 首先从serviceMethodCache缓存中获取，如果为null则创建
@@ -250,7 +275,9 @@ ServiceMethod loadServiceMethod(Method method) {
     return result;
   }
 ```
-####ServiceMethod的创建
+
+#### ServiceMethod的创建 ####
+
 ```java
 final class ServiceMethod<T> {
 	//部分代码省略
@@ -318,7 +345,8 @@ final class ServiceMethod<T> {
 	}
 }
 ```
-#####CallAdapter的创建
+
+##### CallAdapter的创建 #####
 
 ```java
 public CallAdapter<?> callAdapter(Type returnType, Annotation[] annotations) {
@@ -342,7 +370,8 @@ public CallAdapter<?> nextCallAdapter(CallAdapter.Factory skipPast, Type returnT
 
 在创建Retrofit的时候我们添加过addCallAdapterFactory(RxJavaCallAdapterFactory.create()),这是我们会调用RxJavaCallAdapterFactory.get方法获取CallAdapter，通过源代码我们可以找到其返回的是new SimpleCallAdapter(observableType, scheduler)。
 
-#####Converter的创建
+##### Converter的创建 #####
+
 ```java
 public <T> Converter<T, RequestBody> requestBodyConverter(Type type,
    Annotation[] parameterAnnotations, Annotation[] methodAnnotations) {
@@ -367,6 +396,7 @@ public <T> Converter<T, RequestBody> nextRequestBodyConverter(Converter.Factory 
     /******/
 }
 ```
+
 相同的在创建Retrofit的时候我们也添加过许多的ConverterFactory，在寻找相匹配的Converter时我们是通过遍历在寻找到第一个合适的Converter返回。什么叫做合适的Converter，即该ConverterFactory能产生出匹配服务接口注解和返回类型。
 
 ```java
@@ -416,16 +446,19 @@ public static final class Builder {
 
 ```
 
-###OkHttpCall的创建
+### OkHttpCall的创建 ###
+
 ```java
 OkHttpCall(ServiceMethod<T> serviceMethod, Object[] args) {
    this.serviceMethod = serviceMethod;
    this.args = args;
 }
 ```
-###网络请求
-####请求的准备
-```serviceMethod.callAdapter.adapt(okHttpCall)``` 对应SimpleCallAdapter.adapt
+
+### 网络请求 ###
+#### 请求的准备 ####
+
+`serviceMethod.callAdapter.adapt(okHttpCall)` 对应SimpleCallAdapter.adapt
 
 ```java
 static final class SimpleCallAdapter implements CallAdapter<Observable<?>> {
@@ -482,8 +515,9 @@ service.listRepos("octocat")
 	}     
 });
 ```
-####请求的发起
+#### 请求的发起 ####
 回到CallAdapt方法，创建Observable，而new CallOnSubscribe<>(call)生成了一个OnSubscribe（）的实例，而OnSubscribe继承自Action1，其只包含一个call()方法，而这个call是在CallOnSubscribe中实现： 
+
 ```java
 static final class CallOnSubscribe<T> implements Observable.OnSubscribe<Response<T>> {
     private final Call<T> originalCall;
@@ -501,7 +535,9 @@ static final class CallOnSubscribe<T> implements Observable.OnSubscribe<Response
     }
 }
 ```
+
 首先clone了一份Call，然后生成了RequestArbiter，他继承自AtomicBoolean，实现了Subscription, Producer接口，Producer只有一个request方法；一般实现该接口的类，都会包含一个Subscriber对象和一个待处理的数据：
+
 ```java
 static final class RequestArbiter<T> extends AtomicBoolean implements Action0,
     Producer {
@@ -545,10 +581,11 @@ static final class RequestArbiter<T> extends AtomicBoolean implements Action0,
         call.cancel();
     }
 }
-
 ```
-####请求的执行
-回顾创建Retrofit.create()代码中```serviceMethod.callAdapter.adapt(okHttpCall)```，所以上面的```call.execute()``` 就是OkHttpCall.execute
+
+#### 请求的执行 ####
+
+回顾创建Retrofit.create()代码中`serviceMethod.callAdapter.adapt(okHttpCall)`，所以上面的`call.execute()` 就是OkHttpCall.execute
 
 ```java
 public Response<T> execute() throws IOException{
@@ -592,7 +629,9 @@ private okhttp3.Call createRawCall() throws IOException{
 	return(call);
 }
 ```
-####请求的OkHttpClient实例获取
+
+#### 请求的OkHttpClient实例获取 ####
+
 ```java
 public okhttp3.Call.Factory callFactory() {
     return callFactory;
@@ -627,7 +666,9 @@ public Retrofit build(){
 	}
 }
 ```
-####请求结果的处理
+
+#### 请求结果的处理 ####
+
 ```java
 Response<T> parseResponse( okhttp3.Response rawResponse ) throws IOException{
 	ResponseBody rawBody = rawResponse.body();
@@ -658,9 +699,10 @@ Response<T> parseResponse( okhttp3.Response rawResponse ) throws IOException{
 	}
 }
 ```
-还记得创建Observable时 ``` Observable<R> observable = Observable.create(new CallOnSubscribe<>(call)).lift(OperatorMapResponseToBodyOrError.<R>instance()); ``` ，OperatorMapResponseToBodyOrError将包装的Response中的body取出来并进行发射。
 
-##总结
+还记得创建Observable时 ` Observable<R> observable = Observable.create(new CallOnSubscribe<>(call)).lift(OperatorMapResponseToBodyOrError.<R>instance()); ` ，OperatorMapResponseToBodyOrError将包装的Response中的body取出来并进行发射。
+
+## 总结 ##
 现在随着Rxjava响应式编程越来越多的程序猿使用，自己也开始接触和使用。Retrofit+Rxjava+okhttp是时下比较受欢迎的网络请求框架，其源代码并不是很多，其底层网络通信时交由 OkHttp来完成的，但是Retrofit运用了大量的设计模式，代码逻辑很清晰，笔者以前用的是AsyncHttpClient作为app的网络请求框架，其源码也没自己的研究过。但看完Retrofit代码之后觉得收获很大，建议如果感兴趣可以抽时间仔细的阅读。
 
 想阅读作者的更多文章，可以查看我的公共号：
