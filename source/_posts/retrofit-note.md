@@ -131,14 +131,14 @@ Call<User> getUser(@Path("username") String username);
 Call<User> getUser(@Header("Authorization") String authorization)
 ```
 
-![Retrofit依赖](http://img.blog.csdn.net/20160708104109016)
+![Retrofit依赖](https://img-blog.csdn.net/20160708104109016)
 如果所示在Retrofit2.0中只支持okhttp，所以另一种方法是在okhttp的拦截器中addheader。
 
 ## Retrofit2源码解析 ##
 > Retrofit请求框架实现了高度的解耦，通过解析注解的得到的代理类生成http请求，然后将请求交给OkHttp。通过在Retrofit创建时生成的Converter再将OkHttp返回的数据进行类型转换得到自己需要的数据。现在Rxjava响应式编程已经广泛应用，在使用Retrofit时也会结合RxJava使编码更加简单、高效。
 
 一张图简单描述一下Retrofit的工作原理：
-![Retrofit工作原理](http://img.blog.csdn.net/20160708153944054)
+![Retrofit工作原理](https://img-blog.csdn.net/20160708153944054)
 
 ### 定义网络请求接口 ###
 
@@ -218,7 +218,7 @@ public <T> T create(final Class<T> service) {
 
 ### Platfrom的获取 ###
 
-![Platfrom](http://img.blog.csdn.net/20160902155113639)
+![Platfrom](https://img-blog.csdn.net/20160902155113639)
 
 ```java
 class Platform {
@@ -256,7 +256,8 @@ class Platform {
 
 ### ServiceMethod对象的生成 ###
 先看一张我debug时候的ServiceMethod的图
-![ServiceMethod](http://img.blog.csdn.net/20160902161408563)
+![ServiceMethod](https://img-blog.csdn.net/20160902161408563)
+
 #### ServiceMethod的获取 ####
 
 ```java
@@ -706,4 +707,5 @@ Response<T> parseResponse( okhttp3.Response rawResponse ) throws IOException{
 现在随着Rxjava响应式编程越来越多的程序猿使用，自己也开始接触和使用。Retrofit+Rxjava+okhttp是时下比较受欢迎的网络请求框架，其源代码并不是很多，其底层网络通信时交由 OkHttp来完成的，但是Retrofit运用了大量的设计模式，代码逻辑很清晰，笔者以前用的是AsyncHttpClient作为app的网络请求框架，其源码也没自己的研究过。但看完Retrofit代码之后觉得收获很大，建议如果感兴趣可以抽时间仔细的阅读。
 
 想阅读作者的更多文章，可以查看我的公共号：
+
 <center>![振兴书城](http://upload-images.jianshu.io/upload_images/1319879-612c4c66d40ce855.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)</center>

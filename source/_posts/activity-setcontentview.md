@@ -2,7 +2,7 @@
 title: Activity中的Window的setContentView
 date: 2017-11-10 21:29:00
 tags: [Window,Decor]
-categories: View
+categories: Android
 description: "这篇文章距离现在已经两年的时间了。当初自己刚毕业工作不久，才开始接触Android，有一天中午和同事一起吃饭的时候，一个大牛问我你思考过Activity的setContentView是怎么执行的么。当初就因为这个问题我接入到了Android源码。两年时间过去了现在回过头来看，感觉自己写得有很多的不足，本次再补充一下。"
 ---
 这篇文章距离现在已经两年的时间了。当初自己刚毕业工作不久，才开始接触Android，有一天中午和同事一起吃饭的时候，一个大牛问我你思考过Activity的setContentView是怎么执行的么。当初就因为这个问题我接入到了Android源码。两年时间过去了现在回过头来看，感觉自己写得有很多的不足，本次再补充一下。
@@ -340,6 +340,8 @@ protected ViewGroup generateLayout(DecorView decor) {
 generateLayout(DecorView decor)方法构造出来的mContentParent为ID_ANDROID_CONTENT，即mDecor中的R.id.content。
 
 从代码中可以看出显示获取当前窗口的根ViewGroup（mDecor），然后往这个ViewGroup中添加view。
+
+最终我们要展示在Activity中的View已经构造好了，那么在Activity的`onResume` 方法之后，在 `ActivityThread#handleResumeActivity` 方法中会将该View通过WindowManager添加在Activity所挂在的Window上进行展现。
 
 mDecor是什么可以参考博客：[DecorView浅析](http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2013/0322/1054.html)
 

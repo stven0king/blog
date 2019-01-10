@@ -58,7 +58,7 @@ Service之基础
 
 Service的声明周期
 ===
-![Service生命周期](http://oltcsi62w.bkt.clouddn.com/image/android/service/service%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.gif)
+![Service生命周期](https://developer.android.com/images/service_lifecycle.png)
 
 该图分别表示了startService和bindService的声明周期，那么当Service即有startService又有bindService时呢？
 
@@ -93,4 +93,5 @@ Service的声明周期
 看到这里关于Service的基础知识应该回顾的差不多，我们一起期待新的一年的开始吧~！~！~！
 
 想阅读作者的更多文章，可以查看我的公共号：
+
 <center>![振兴书城](http://upload-images.jianshu.io/upload_images/1319879-612c4c66d40ce855.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)</center>

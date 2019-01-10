@@ -2,7 +2,7 @@
 title: Android换肤原理和Android-Skin-Loader框架解析
 date: 2017-11-27 11:54:00
 tags: [Factory,inflate]
-categories: 换肤
+categories: Android
 description: "Android换肤技术已经是很久之前就已经被成熟使用的技术了，然而我最近才在学习和接触热修复的时候才看到。在看了一些换肤的方法之后，并且对市面上比较认可的Android-Skin-Loader换肤框架的源码进行了分析总结。再次记录一下祭奠自己逝去的时间。"
 ---
 
