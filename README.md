@@ -5,8 +5,23 @@ hexo blog resource
 
 # 文章目录
 
+## 2019
+
+- [关于RxJava的基础心法解析](source/_posts/rx_init.md)
+
 ## 2018
 
+- [Okhttp拦截器Interceptor学习和使用](source/_posts/okhttp-interceptor.md)
+- [Android更新资源文件浅思考](source/_posts/hotfix-source.md)
+- [Multidex记录三：源码解析](source/_posts/multidex3.md)
+- [Multidex记录二：缺陷&解决](source/_posts/multidex2.md)
+- [Multidex记录一：介绍和使用](source/_posts/multidex1.md)
+- [Android6.0动态权限适配&XMPermissions](source/_posts/permissions.md)
+- [Android平台JSON预览(JSON-handle)](source/_posts/jsonhandleview.md)
+- [InstantRun从2.0到3.0，历史解毒](source/_posts/instant-run.md)
+- [Android动画绘制原理（源码解析）](source/_posts/Android-animation-source.md)
+- [Android系统的编舞者Choreographer](source/_posts/android-source-choreographer.md)
+- [Android的16ms和垂直同步以及三重缓存](source/_posts/android-16ms.md)
 - [寻找红黑树的操作手册](/source/_posts/red-black-tree.md)
 - [Android项目解耦--路由框架ARouter的使用](/source/_posts/arouter-study.md)
 - [Android项目解耦--路由框架ARouter源码解析](/source/_posts/arouter-source.md)
